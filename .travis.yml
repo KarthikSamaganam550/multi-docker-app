@@ -1,11 +1,11 @@
 sudo: required
 services:
   - docker
-before-install:
+before_install:
   - docker build -t karthiksamaganam/react-multi-docker-test -f ./client/Dockerfile.dev .  
 script:
   - docker run  karthiksamaganam/react-multi-docker-test npm test -- --coverage
-after-success:
+after_success:
   - docker build -t karthiksamaganam/multi-client ./client 
   - docker build -t karthiksamaganam/multi-nginx ./nginx 
   - docker build -t karthiksamaganam/multi-server ./server 
