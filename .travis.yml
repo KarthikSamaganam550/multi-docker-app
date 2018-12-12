@@ -1,20 +1,18 @@
 sudo: required
 services:
   - docker
-before_install:
+#before_install:
   #- docker build -t karthiksamaganam/react-multi-docker-test -f ./client/Dockerfile  
 #script:
   #- docker run  karthiksamaganam/react-multi-docker-test npm test -- --coverage
-
-  - docker build -t karthiksamaganam/multi-client ./client
-script:
-  - docker run  karthiksamaganam/multi-client npm test -- --coverage
-after_success: 
+before_install: 
   - docker build -t karthiksamaganam/multi-client ./client
   - docker build -t karthiksamaganam/multi-nginx ./nginx 
   - docker build -t karthiksamaganam/multi-server ./server 
   - docker build -t karthiksamaganam/multi-worker ./worker 
-
+script:
+  - docker ps
+after_success:  
   # login into docker 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # push the images to docker hub....
