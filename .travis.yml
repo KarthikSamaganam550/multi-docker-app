@@ -13,7 +13,7 @@ before_install:
  after_success: 
   # login into docker 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  # push the images to docker hub..
+  # push the images to docker hub....
 
   - docker push karthiksamaganam/multi-client
   - docker push karthiksamaganam/multi-nginx
