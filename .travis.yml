@@ -5,11 +5,12 @@ before_install:
   #- docker build -t karthiksamaganam/react-multi-docker-test -f ./client/Dockerfile  
 #script:
   #- docker run  karthiksamaganam/react-multi-docker-test npm test -- --coverage
-#after_success:
+
   - docker build -t karthiksamaganam/multi-client ./client 
   - docker build -t karthiksamaganam/multi-nginx ./nginx 
   - docker build -t karthiksamaganam/multi-server ./server 
   - docker build -t karthiksamaganam/multi-worker ./worker 
+ after_success: 
   # login into docker 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # push the images to docker hub..
@@ -18,6 +19,19 @@ before_install:
   - docker push karthiksamaganam/multi-nginx
   - docker push karthiksamaganam/multi-server
   - docker push karthiksamaganam/multi-worker
+
+  deploy: 
+    provider: elasticbeanstalk
+    region: ap-southeast-2
+    app: multi-docker
+    env: MultiDocker-env
+    bucket_name: elasticbeanstalk-ap-southeast-2-961696309176
+    bucket_path: docker-multi
+    on:
+      branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key:
+      secure: $AWS_SECRET_KEY  
 
   
   
