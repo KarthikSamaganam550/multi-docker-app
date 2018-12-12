@@ -10,7 +10,7 @@ before_install:
   - docker build -t karthiksamaganam/multi-nginx ./nginx 
   - docker build -t karthiksamaganam/multi-server ./server 
   - docker build -t karthiksamaganam/multi-worker ./worker 
-after_success: 
+#after_success: 
   # login into docker 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # push the images to docker hub....
